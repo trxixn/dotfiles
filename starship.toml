@@ -1,1 +1,11 @@
-/Users/traiansfarghiu/.config/starship.toml
+format = "$directory$git_branch$character"
+add_newline = false
+
+[directory]
+style = "blue"
+truncation_length = 3
+
+[git_branch]
+style = "green"
+symbol = "🌿 "
+

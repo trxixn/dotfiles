@@ -1,1 +1,0 @@
-/Users/traiansfarghiu/.doom.d
