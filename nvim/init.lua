@@ -13,11 +13,23 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("j.plugins")
-
+require("lazy").setup("t.plugins")
+require("rose-pine").setup({
+    disable_background = true,
+    styles = {
+        italic = false,
+    },
+})
 
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme rose-pine]])
+vim.cmd([[colorscheme rose-pine-moon]])
+
+-- set black background
+vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "#000000" })
+
 
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.number = true
@@ -65,6 +77,7 @@ vim.keymap.set('n', '<leader>n', ':noh<CR>', { silent = true })
 
 vim.g.python3_host_prog = '/usr/bin/python3'
 
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
 
 
 -- Default: 4 spaces
@@ -98,3 +111,4 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.shiftwidth = 4
   end,
 })
+
