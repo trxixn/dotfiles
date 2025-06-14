@@ -1,6 +1,6 @@
 # Dotfiles
 
-My personal dotfiles repository containing configuration files for various tools and applications I use in my development workflow. These configurations are optimized for macOS and focus on a clean, efficient development environment.
+My personal dotfiles repository containing configuration files for various tools and applications I use in my development workflow.
 
 ## Included Configurations
 
@@ -25,11 +25,6 @@ My personal dotfiles repository containing configuration files for various tools
 - Quick window switching with Space key
 - Optimized for 256-color terminals
 
-### Neofetch (`neofetch/`)
-- System information display configuration
-- Custom styling for system information
-- Optimized for macOS display
-
 ### Firefox (`userChrome.css`)
 - Custom Firefox styling
 - Currently switched to [Zen Browser](https://zen-browser.app/) 
@@ -48,11 +43,9 @@ cd ~/.dotfiles
 - Neovim - Modern Vim-based text editor
 - Kitty - Terminal emulator
 - Tmux - Terminal multiplexer
-- Starship prompt - Custom shell prompt
-- Neofetch - System information display
 
 ## Customization
 
-Feel free to use these configurations as a starting point for your own setup. Each configuration file is well-documented with comments explaining the purpose of different settings.
+Feel free to use these configurations as a starting point for your own setup.
 
 
