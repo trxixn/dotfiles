@@ -21,3 +21,4 @@ vim.api.nvim_set_hl(0, "SignColumn", { bg = "#000000" })
 -- tbh i forgot what this does n im 2 lazy 2 look it up :3
 --vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
 
+
