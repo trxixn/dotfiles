@@ -26,7 +26,7 @@ My personal dotfiles repository containing configuration files for various tools
 - Optimized for 256-color terminals
 
 ### Firefox (`userChrome.css`)
-- Custom Firefox styling
+- Custom Firefox styling made for using [Sidebery](https://addons.mozilla.org/en-US/firefox/addon/sidebery/)
 - Currently switched to [Zen Browser](https://zen-browser.app/) 
 
 ## Installation
