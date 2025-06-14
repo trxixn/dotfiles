@@ -40,9 +40,10 @@ cd ~/.dotfiles
 ## Dependencies
 
 ### Core Tools
-- Neovim - Modern Vim-based text editor
-- Kitty - Terminal emulator
-- Tmux - Terminal multiplexer
+- [Neovim](https://neovim.io/) - Modern Vim-based text editor
+- [Kitty](https://sw.kovidgoyal.net/kitty/) - Terminal emulator
+- [Tmux](https://github.com/tmux/tmux/wiki) - Terminal multiplexer
+- [ripgrep](https://github.com/BurntSushi/ripgrep) - Fast text search tool (required for Neovim's fuzzy finder)
 
 ## Customization
 
