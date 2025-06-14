@@ -1,19 +1,21 @@
 vim.g.mapleader = ' '
+require("trxixn.set")
+require("trxixn.remap")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
+    vim.fn.system({
     "git",
     "clone",
-    "--filter=blob:none",
+    "--filter=blob:none",vim.keymap
     "https://github.com/folke/lazy.nvim.git",
     "--branch=stable", -- latest stable release
     lazypath,
-  })
+    })
 end
 vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup("t.plugins")
+    
+require("lazy").setup("trxixn.plugins")
 require("rose-pine").setup({
     disable_background = true,
     styles = {
@@ -24,22 +26,11 @@ require("rose-pine").setup({
 vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme rose-pine-moon]])
 
--- set black background
+--  set black background
 vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "#000000" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "#000000" })
-
-
-vim.opt.clipboard = 'unnamedplus'
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
 
 
 -- nvim-tree binds 
@@ -53,62 +44,19 @@ require("lspconfig").ts_ls.setup({})
 
 -- nvim-ale config
 vim.cmd [[
-  let g:ale_linters = {
+    let g:ale_linters = {
       \ 'typescript': ['tsserver'],
       \ 'typescriptreact': ['tsserver'],
       \ }
-  let g:ale_fixers = {
+    let g:ale_fixers = {
       \ 'typescript': ['prettier'],
       \ 'typescriptreact': ['prettier'],
       \ }
-  let g:ale_fix_on_save = 1
+    let g:ale_fix_on_save = 1
 ]]
-
--- telescope binds
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- highlight clear
 vim.keymap.set('n', '<leader>n', ':noh<CR>', { silent = true })
 
-
-vim.g.python3_host_prog = '/usr/bin/python3'
-
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
-
-
--- Default: 4 spaces
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-
--- Filetype-specific settings
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "javascript", "typescript", "json", "html", "css", "yaml", "lua" },
-  callback = function()
-    vim.opt_local.tabstop = 2
-    vim.opt_local.shiftwidth = 2
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "python" },
-  callback = function()
-    vim.opt_local.tabstop = 4
-    vim.opt_local.shiftwidth = 4
-    vim.opt_local.expandtab = true
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "go" },
-  callback = function()
-    vim.opt_local.expandtab = false
-    vim.opt_local.tabstop = 4
-    vim.opt_local.shiftwidth = 4
-  end,
-})
 
