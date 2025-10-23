@@ -1,3 +1,4 @@
+--[[
 return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
@@ -10,7 +11,7 @@ return {
         enabled = true,
         auto_trigger = true,
         keymap = {
-          accept = "<Tab>",
+          accept = "<M-p>",
           next = "<M-]>",
           prev = "<M-[>",
           dismiss = "<C-]>",
@@ -20,3 +21,6 @@ return {
     })
   end,
 }
+--]]
+
+return {}

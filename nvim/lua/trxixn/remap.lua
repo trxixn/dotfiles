@@ -18,4 +18,14 @@ vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
 
+-- leetcode:
+-- language selector
+vim.keymap.set('n', '<leader>lc', ':Leet lang<CR>', { desc = 'Change LeetCode language' })
+
+-- Runs the test cases
+vim.keymap.set('n', '<leader>lr', ':Leet test<CR>', { desc = 'LeetCode Run Tests' })
+
+-- Submits the solution
+vim.keymap.set('n', '<leader>lf', ':Leet submit<CR>', { desc = 'LeetCode Submit' })

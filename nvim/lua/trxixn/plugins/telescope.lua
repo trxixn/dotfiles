@@ -14,8 +14,8 @@ return {
 					i = {
 						["<esc>"] = require("telescope.actions").close,
 						-- search history
-						["<C-Down>"] = require('telescope.actions').cycle_history_next,
-						["<C-Up>"] = require('telescope.actions').cycle_history_prev,
+						["<C-k>"] = require('telescope.actions').cycle_history_next,
+						["<C-j>"] = require('telescope.actions').cycle_history_prev,
 					},
 				},
 				layout_strategy = "vertical",

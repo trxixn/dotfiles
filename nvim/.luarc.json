@@ -1,0 +1,9 @@
+{
+    "workspace": {
+        "library": ["./"],
+        "checkThirdParty": false
+    },
+    "diagnostics": {
+        "globals": ["vim"]
+    }
+}
