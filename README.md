@@ -5,7 +5,7 @@ My personal dotfiles repository containing configuration files for various tools
 ## Included Configurations
 
 ### Neovim (`nvim/`)
-- Custom Neovim configuration with LSP support
+- Custom Neovim configuration
 - Optimized for modern development workflows
 - Includes key mappings and plugin configurations
 - Language server support for various programming languages
