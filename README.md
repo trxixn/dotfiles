@@ -1,11 +1,12 @@
 # Dotfiles
 
-My personal dotfiles repository containing configuration files for various tools and applications I use in my development workflow.
+My personal dotfiles repository containing configuration files for various tools and applications I use in my development workflow. Poured my heart and soul into them and i hope it will become a starting point for your personal config too :).
 
 ## Included Configurations
 
 ### Neovim (`nvim/`)
 - Custom Neovim configuration
+- FuzzyFinder, LSP/PATH/PROJECT based autocompletion, (currently commented) AI Inline Completion
 - Optimized for modern development workflows
 - Includes key mappings and plugin configurations
 - Language server support for various programming languages
@@ -19,11 +20,10 @@ My personal dotfiles repository containing configuration files for various tools
 ### Tmux (`.tmux.conf`)
 - Custom key bindings with `C-a` as prefix (instead of default `C-b`)
 - Vim-style pane navigation (h,j,k,l)
-- Mouse support enabled
 - Smart pane switching with Vim awareness
-- Transparent background integration with Kitty
-- Quick window switching with Space key
-- Optimized for 256-color terminals
+
+### Aerospace (`.aerospace.toml`)
+- Basic i3 style window manager for my mac (tried [Yabai](https://github.com/koekeishiya/yabai), didn't enojoy it as much)
 
 ### Firefox (`userChrome.css`)
 - Custom Firefox styling made for using [Sidebery](https://addons.mozilla.org/en-US/firefox/addon/sidebery/)
@@ -44,6 +44,7 @@ cd ~/.dotfiles
 - [Kitty](https://sw.kovidgoyal.net/kitty/) - Terminal emulator
 - [Tmux](https://github.com/tmux/tmux/wiki) - Terminal multiplexer
 - [ripgrep](https://github.com/BurntSushi/ripgrep) - Fast text search tool (required for Neovim's fuzzy finder)
+- (Optional) [Aerospace](https://github.com/nikitabobko/AeroSpace) - i3-like Window Manager only for MacOS
 
 ## Customization
 
