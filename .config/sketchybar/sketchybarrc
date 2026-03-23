@@ -1,104 +1,109 @@
 #!/bin/bash
 
-source "$CONFIG_DIR/colors.sh" # Loads all defined colors
-source "$CONFIG_DIR/icons.sh" # Loads all defined icons
+# Load colors
+source "$HOME/.config/sketchybar/colors.sh"
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+FONT="VictorMono Nerd Font Mono:Regular:14.0"
 
-ITEM_DIR="$CONFIG_DIR/items" # Directory where the items are configured
-PLUGIN_DIR="$CONFIG_DIR/plugins" # Directory where all the plugin scripts are stored
+# --- Bar Settings ---
+sketchybar --bar height=36 \
+                 color=0x00000000 \
+                 position=top \
+                 padding_left=10 \
+                 padding_right=10
+                 blur_radius=0 \
+                 shadow=0 \
+                 border_width=0 
 
-FONT="SF Pro" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
-PADDINGS=3 # All paddings use this value (icon, label, background)
+# --- Default Item Settings ---
+sketchybar --default icon.font="$FONT" \
+                     label.font="$FONT" \
+                     icon.color=$FG0 \
+                     label.color=$FG0 \
+                     background.color=$BG1 \
+                     background.corner_radius=0 \
+                     background.height=26 \
+                     background.padding_left=2 \
+                     background.padding_right=2 \
+                     icon.padding_left=10 \
+                     icon.padding_right=4 \
+                     label.padding_left=4 \
+                     label.padding_right=10 \
+                     margin=4
 
-# aerospace setting
-AEROSPACE_FOCUSED_MONITOR_NO=$(aerospace list-workspaces --focused)
-AEROSPACE_LIST_OF_WINDOWS_IN_FOCUSED_MONITOR=$(aerospace list-windows --workspace $AEROSPACE_FOCUSED_MONITOR_NO | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+# --- Custom Event for AeroSpace ---
+sketchybar --add event aerospace_workspace_change
 
-# Setting up and starting the helper process
-HELPER=git.felix.helper
-killall helper
-(cd $CONFIG_DIR/helper && make)
-$CONFIG_DIR/helper/helper $HELPER > /dev/null 2>&1 &
+# --- Left: AeroSpace Workspaces ---
+for sid in 1 2 3 4 5 6 7 8 9 10 D F W S Q; do
+  DRAWING="off"
+  if [[ "$sid" =~ ^[1-5]$ ]]; then DRAWING="on"; fi
 
-# Unload the macOS on screen indicator overlay for volume change
-launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
+  sketchybar --add item workspace.$sid left \
+             --subscribe workspace.$sid aerospace_workspace_change \
+             --set workspace.$sid \
+                   drawing=$DRAWING \
+                   icon.drawing=off \
+                   label="$sid" \
+                   label.font="$FONT" \
+                   label.padding_left=12 \
+                   label.padding_right=12 \
+                   label.y_offset=1 \
+                   background.height=26 \
+                   click_script="aerospace workspace $sid" \
+                   script="$PLUGIN_DIR/aerospace.sh $sid"
+done
+# --- Center: Spotify / Music ---
+sketchybar --add item music center \
+           --set music update_freq=2 \
+                       icon="" \
+                       icon.font="VictorMono Nerd Font Mono:Regular:22.0" \
+                       icon.color=$MAGENTA \
+                       icon.padding_left=10 \
+                       icon.padding_right=4 \
+                       script="$PLUGIN_DIR/music.sh"
 
-# Setting up the general bar appearance of the bar
-bar=(
-  height=30
-  color=$BAR_COLOR
-  border_width=0
-  border_color=$BAR_BORDER_COLOR
-  shadow=off
-  position=top
-  sticky=on
-  padding_right=10
-  padding_left=10
-  y_offset=-2
-  margin=-2
-  topmost=window
-  blur_radius=40
-)
+# --- Right: Time ---
+sketchybar --add item clock right \
+           --set clock update_freq=10 \
+                       icon="" \
+                       icon.font="SF Pro:Bold:14.0" \
+                       icon.color=$BLUE \
+                       icon.padding_left=3 \
+                       label.padding_right=10 \
+                       label.padding_left=4 \
+                       script="$PLUGIN_DIR/clock.sh" \
+                       click_script="$PLUGIN_DIR/toggle_stats.sh"
 
-sketchybar --bar "${bar[@]}"
+# --- Right: Date ---
+sketchybar --add item date right \
+           --set date update_freq=1000 \
+                      icon="" \
+                      icon.font="SF Pro:Bold:14.0" \
+                      icon.color=$BLUE \
+                      icon.padding_left=3 \
+                      label.padding_right=10 \
+                      label.padding_left=4 \
+                      script="$PLUGIN_DIR/date.sh"
 
-# Setting up default values
-defaults=(
-  updates=when_shown
-  icon.font="$FONT:Regular:12.0"
-  icon.color=$ICON_COLOR
-  icon.padding_left=$PADDINGS
-  icon.padding_right=$PADDINGS
-  label.font="$FONT:Semibold:12.0"
-  label.color=$LABEL_COLOR
-  label.padding_left=$PADDINGS
-  label.padding_right=$PADDINGS
-  label.shadow.drawing=on
-  label.shadow.distance=2
-  label.shadow.color=0xff000000
-  padding_right=$PADDINGS
-  padding_left=$PADDINGS
-  background.height=22
-  background.corner_radius=9
-  background.border_width=2
-  background.blur_radius=20
-  popup.background.border_width=2
-  popup.background.corner_radius=9
-  popup.background.border_color=$POPUP_BORDER_COLOR
-  popup.background.color=$POPUP_BACKGROUND_COLOR
-  popup.blur_radius=20
-  popup.background.shadow.drawing=on
-  scroll_texts=on
-)
+# --- Right: Battery ---
+sketchybar --add item battery right \
+           --set battery update_freq=120 \
+                         icon.font="SF Pro:Bold:14.0" \
+                         icon.y_offset=-1\
+                         icon.padding_left=10 \
+                         icon.padding_right=4 \
+                         script="$PLUGIN_DIR/battery.sh" 
 
-sketchybar --default "${defaults[@]}"
+# --- Right: Wi-Fi ---
+sketchybar --add item wifi right \
+           --set wifi update_freq=10 \
+                      icon="􀙇" \
+                      icon.font="SF Pro:Bold:14.0" \
+                      icon.color=$CYAN \
+                      icon.padding_left=10 \
+                      icon.padding_right=5 \
+                      script="$PLUGIN_DIR/wifi.sh" \
+                      click_script="open x-apple.systempreferences:com.apple.wifi-settings-extension"
 
-
-# Left
-source "$ITEM_DIR/apple.sh"
-source "$ITEM_DIR/spaces.sh"
-source "$ITEM_DIR/front_app.sh"
-#source "$ITEM_DIR/yabai.sh"
-
-# Center
-# source "$ITEM_DIR/spotify.sh"
-# source "$ITEM_DIR/media.sh"
-
-# Right
-source "$ITEM_DIR/calendar.sh"
-# source "$ITEM_DIR/input_source.sh"
-source "$ITEM_DIR/battery.sh"
-#source "$ITEM_DIR/brew.sh"
-#source "$ITEM_DIR/github.sh"
-source "$ITEM_DIR/wifi.sh"
-source "$ITEM_DIR/volume.sh"
-source "$ITEM_DIR/svim.sh"
-
-source "$ITEM_DIR/cpu.sh"
-# source "$ITEM_DIR/weather.sh"
-
-sketchybar --hotload on
-
-# Forcing all item scripts to run (never do this outside of sketchybarrc)
 sketchybar --update
-
-echo "sketchybar configuation loaded.."

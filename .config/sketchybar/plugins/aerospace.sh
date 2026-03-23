@@ -1,47 +1,26 @@
-#!/usr/bin/env bash
+#!/bin/bash
+source "$HOME/.config/sketchybar/colors.sh"
 
-echo \$FOCUSED_WORKSPACE: $FOCUSED_WORKSPACE, \$NAME: $NAME \$1: $1 >> ~/aaaa
+# Check if this workspace has any windows
+WINDOWS=$(aerospace list-windows --workspace "$1")
 
-if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-    sketchybar --set $NAME background.drawing=on
-else
-    sketchybar --set $NAME background.drawing=off
+# Should this workspace ALWAYS be shown (1-5)?
+ALWAYS_SHOW=false
+if [[ "$1" =~ ^[1-5]$ ]]; then
+    ALWAYS_SHOW=true
 fi
 
-
-
-# MAIN_COLOR=0xffa17fa7
-# ACCENT_COLOR=0xffe19286
-#
-# echo $NAME > ~/debug_skekychybar
-#
-# if [ "$1" = "change-focused-window" ]; then
-#     echo "change-focused-window"
-#     focused_window_info=$(aerospace list-windows --focused)
-#     focused_window_id=$(echo $focused_window_info | awk -F ' \\| ' '{print $1}')
-#     if [ "$2" = "$focused_window_id" ]; then
-#         sketchybar --set $NAME icon.color=$ACCENT_COLOR
-#     else
-#         sketchybar --set $NAME icon.color=$MAIN_COLOR
-#     fi
-# fi
-#
-# if [ "$1" = "change-focused-workspace" ]; then
-#     echo "change-focused-workspace"
-#     focused_workspace=$(aerospace list-workspaces --focused)
-#     if [ "$2" = "$focused_workspace" ]; then
-#         sketchybar --set $NAME label.color=$ACCENT_COLOR
-#     else
-#         sketchybar --set $NAME label.color=$MAIN_COLOR
-#     fi
-# fi
-#
-# if [ "$1" = "move-window-within-workspace" ]; then
-#     echo "move-window-within-workspace"
-#     focused_workspace=$(aerospace list-workspaces --focused)
-#     if [ "$2" = "$focused_workspace" ]; then
-#         sketchybar --set $NAME label.color=$ACCENT_COLOR
-#     else
-#         sketchybar --set $NAME label.color=$MAIN_COLOR
-#     fi
-# fi
+if [ "$1" = "$AEROSPACE_FOCUSED_WORKSPACE" ]; then
+    # Current workspace: Always show, Accent colors
+    sketchybar --set $NAME drawing=on \
+                           background.color=$ACCENT_COLOR \
+                           label.color=$BG1
+elif [ "$WINDOWS" != "" ] || [ "$ALWAYS_SHOW" = true ]; then
+    # Show if it has windows OR if it is one of the permanent 1-5
+    sketchybar --set $NAME drawing=on \
+                           background.color=$BG1 \
+                           label.color=$FG0
+else
+    # Hide if empty and not in the permanent list
+    sketchybar --set $NAME drawing=off
+fi
