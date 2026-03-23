@@ -14,3 +14,4 @@ export YELLOW=0xff8c6c3e
 export BLUE=0xff2e7de9
 export MAGENTA=0xff9854f1
 export CYAN=0xff007197
+export BORDER_COLOR=0xffb4b5b9  # Soft, muted silver

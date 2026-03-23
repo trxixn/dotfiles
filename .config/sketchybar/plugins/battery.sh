@@ -8,17 +8,16 @@ BATT_PERCENT=$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)
 CHARGING=$(pmset -g batt | grep 'AC Power')
 
 if [[ $CHARGING != "" ]]; then
-  # Charging Icon (Native Apple Symbol)
-  ICON="􀢋"
+  ICON="󰂄"
   COLOR=$CYAN
 else
   # Discharging Icons based on percentage
   case ${BATT_PERCENT} in
-    [8-9][0-9]|100) ICON="􀛨" ; COLOR=$CYAN;;
-    [6-7][0-9]) ICON="􀺶" ; COLOR=$YELLOW ;;
-    [3-5][0-9]) ICON="􀺶" ; COLOR=$YELLOW ;;
-    [1-2][0-9]) ICON="􀺺" ; COLOR=$RED ;;
-    *) ICON="􀛪" ; COLOR=$RED ;;
+    [8-9][0-9]|100) ICON="󰁹" ; COLOR=$CYAN;;
+    [6-7][0-9]) ICON="󰂀" ; COLOR=$CYAN;;
+    [3-5][0-9]) ICON="󰁾" ; COLOR=$CYAN;;
+    [1-2][0-9]) ICON="󰁺" ; COLOR=$RED ;;
+    *) ICON="󰂎" ; COLOR=$RED ;;
   esac
 fi
 
