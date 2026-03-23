@@ -5,16 +5,11 @@ My personal dotfiles repository containing configuration files for various tools
 ## Included Configurations
 
 ### Neovim (`nvim/`)
-- Custom Neovim configuration
 - FuzzyFinder, LSP/PATH/PROJECT based autocompletion, (currently commented) AI Inline Completion
-- Optimized for modern development workflows
-- Includes key mappings and plugin configurations
-- Language server support for various programming languages
+- Includes personal key mappings and plugin configurations
 
-### Alacritty(`alacritty/`)
+### Kitty(`kitty/`)
 - Modern, GPU-accelerated terminal emulator
-- Custom color schemes and font settings
-- Optimized for performance and readability
 - Integration with other tools in the workflow
 
 ### Tmux (`.tmux.conf`)
@@ -27,7 +22,7 @@ My personal dotfiles repository containing configuration files for various tools
 
 ### Firefox (`userChrome.css`)
 - Custom Firefox styling made for using [Sidebery](https://addons.mozilla.org/en-US/firefox/addon/sidebery/)
-- Currently switched to [Zen Browser](https://zen-browser.app/) 
+- Currently switched to [Helium](https://github.com/imputnet/helium) 
 
 ## Installation
 
