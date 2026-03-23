@@ -11,7 +11,7 @@ My personal dotfiles repository containing configuration files for various tools
 - Includes key mappings and plugin configurations
 - Language server support for various programming languages
 
-### Kitty (`kitty/`)
+### Alacritty(`alacritty/`)
 - Modern, GPU-accelerated terminal emulator
 - Custom color schemes and font settings
 - Optimized for performance and readability
