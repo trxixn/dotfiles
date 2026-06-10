@@ -32,6 +32,9 @@ vim.opt.updatetime = 50
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
-vim.opt.colorcolumn = "80"
+
+-- help line placed somewhere on the screen's y-axis ("" means no line)
+vim.opt.colorcolumn = ""
+vim.opt.showtabline = 2
 
 vim.g.mapleader = " "

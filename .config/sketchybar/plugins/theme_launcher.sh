@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# ADDED TOKYOLIGHT HERE
-THEMES="tokyonight\ngruvbox\ntokyolight"
+# Available themes
+THEMES="tokyonight\ngruvbox\ntokyolight\nnordic"
 THEME_FILE="$HOME/.config/sketchybar/.current_theme"
 CURRENT_THEME=$(cat "$THEME_FILE" 2>/dev/null)
 
@@ -15,9 +15,11 @@ elif [ "$CURRENT_THEME" = "gruvbox" ]; then
     BG_COLOR="#1d2021"       
     FG_COLOR="#ebdbb2"
 elif [ "$CURRENT_THEME" = "tokyolight" ]; then
-    # --- Tokyo Day Menu Colors ---
-    BG_COLOR="#e1e2e7"       # Crisp off-white
-    FG_COLOR="#3760bf"       # Deep blue
+    BG_COLOR="#e1e2e7"       
+    FG_COLOR="#3760bf"
+elif [ "$CURRENT_THEME" = "nordic" ]; then
+    BG_COLOR="#2e3440"       
+    FG_COLOR="#eceff4"
 fi
 
 CHOICE=$(echo -e "$THEMES" | /opt/homebrew/bin/choose -b "$BG_COLOR" -c "$FG_COLOR" -f "$FONT_NAME" -s "$FONT_SIZE")

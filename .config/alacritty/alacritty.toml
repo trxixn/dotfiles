@@ -47,9 +47,10 @@ offset = {x = 0, y = 1}
 
 [font.normal]
 # macOS default font family is usually Menlo.
-# family = "Monocraft" 
-# family = "Menlo" 
-family = "Hasklug Nerd Font" 
+# family = "Hasklug Nerd Font" 
+family = "VictorMono Nerd Font" 
+# family = "JetBrainsMono Nerd Font" 
+# family = "Fira Code" 
 style = "Medium"
 
 [font.bold]
@@ -64,9 +65,12 @@ style = "Bold Italic"
 
 # Colors (Default Monokai-like dark theme)
 [colors.primary]
-foreground = "#d8d8d8"
+# foreground = "#d8d8d8"
+foreground = "#D8DEE9" #idk
 # background = "#121212" # obsidian black
-background = "#232136" # rose-pine 
+# background = "#232136" # rose-pine 
+# background = "#121820" # rose-pine but darker
+background = "#2E3440" # idk
 # background = "#100c08" # black
 # background = "#1e1e2e" # catpuccin
 

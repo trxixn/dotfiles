@@ -1,4 +1,4 @@
-return {
+ return {
     "kawre/leetcode.nvim",
     dependencies = {
         "nvim-telescope/telescope.nvim",

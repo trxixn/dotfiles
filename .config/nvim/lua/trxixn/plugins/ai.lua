@@ -8,7 +8,7 @@
       provider = "gemini",
       provider_options = {
         gemini = {
-          api_key = "",
+          api_key = "AIzaSyCGkBan0BUujKQMbDUBcjG8paGAsqnGj08",
           model = "gemini-2.0-flash", -- Use Flash for speed
           steam = true,
         },

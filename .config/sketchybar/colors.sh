@@ -1,15 +1,17 @@
-# --- TOKYO NIGHT COLORS ---
-# export BG0=0x00000000      # transparent
-export BG0=0xff1a1b26
-export BG1=0xff24283b      
-export FG0=0xffc0caf5      
+#!/bin/bash
+# --- NORDIC / NORD COLORS ---
+# export BG0=0xff2e3440       # Polar Night darkest
+# export BG1=0xff3b4252       # Polar Night 
+export BG0=0x802e3440       # Transparent
+export BG1=0x803b4252
+export FG0=0xffeceff4       # Snow Storm brightest
 
-export GREEN=0xff9ece6a
-export RED=0xfff7768e
-export YELLOW=0xffe0af68
-export BLUE=0xff7dcfff
-export MAGENTA=0xffbb9af7
-export CYAN=0xff7dcfff
+export GREEN=0xffa3be8c     # Aurora green
+export RED=0xffbf616a       # Aurora red
+export YELLOW=0xffebcb8b    # Aurora yellow
+export BLUE=0xff81a1c1      # Frost blue
+export MAGENTA=0xffb48ead   # Aurora purple
+export CYAN=0xff88c0d0      # Frost cyan
 
-export ACCENT_COLOR=$MAGENTA
-export BORDER_COLOR=0xff414868  # Muted greyish-blue 
+export ACCENT_COLOR=$CYAN
+export BORDER_COLOR=0xff4c566a  # Polar Night lightest

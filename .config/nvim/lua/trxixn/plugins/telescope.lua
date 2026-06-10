@@ -15,6 +15,7 @@ return {
             defaults = {
                     preview = { treesitter = false },
                     color_devicons = true,
+                    file_ignore_patterns = { "^.git/" },
                     sorting_strategy = "ascending",
                     borderchars = {
                         "", -- top
@@ -44,7 +45,10 @@ return {
 				["lsp_references"] = { wrap_results = true, },
 				["lsp_definitions"] = { wrap_results = true, },
 				["diagnostics"] = { wrap_results = true, },
-				["find_files"] = { wrap_results = true, },
+				["find_files"] = { 
+                        wrap_results = true,
+                        hidden = true,
+                    },
 				["buffers"] = { sort_mru = true, ignore_current_buffer = true },
 			},
             extensions = {

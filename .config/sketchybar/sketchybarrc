@@ -1,37 +1,79 @@
 #!/bin/bash
 
-# Load colors
+# Load colors first (needed by style)
 source "$HOME/.config/sketchybar/colors.sh"
+
+# Load style (uses color variables)
+STYLE_FILE="$HOME/.config/sketchybar/style.sh"
+if [ -f "$STYLE_FILE" ]; then
+    source "$STYLE_FILE"
+else
+    # Default style values if no style file exists
+    export BAR_HEIGHT=42
+    export BAR_COLOR=0x00000000
+    export BAR_BLUR_RADIUS=0
+    export BAR_SHADOW=off
+    export BAR_BORDER_WIDTH=0
+    export BAR_PADDING_LEFT=10
+    export BAR_PADDING_RIGHT=10
+    export BAR_POSITION=top
+    
+    export ITEM_BG_COLOR=$BG1
+    export ITEM_BG_HEIGHT=32
+    export ITEM_BG_CORNER_RADIUS=0
+    export ITEM_BG_BORDER_WIDTH=3
+    export ITEM_BG_BORDER_COLOR=$BORDER_COLOR
+    export ITEM_PADDING_LEFT=2
+    export ITEM_PADDING_RIGHT=2
+    export ITEM_MARGIN=4
+    
+    export ICON_PADDING_LEFT=10
+    export ICON_PADDING_RIGHT=4
+    export LABEL_PADDING_LEFT=4
+    export LABEL_PADDING_RIGHT=10
+    
+    export WS_BG_HEIGHT=32
+    export WS_BG_CORNER_RADIUS=0
+    export WS_BG_BORDER_WIDTH=3
+    export WS_LABEL_PADDING_LEFT=12
+    export WS_LABEL_PADDING_RIGHT=12
+    
+    export SHOW_MUSIC=true
+    export SHOW_DATE_ICON=true
+    export SHOW_CLOCK_ICON=true
+fi
+
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 FONT="VictorMono Nerd Font Mono:Regular:16.0"
 
 # --- Bar Settings ---
-sketchybar --bar height=42 \
-                 color=0x00000000 \
-                 position=top \
-                 padding_left=10 \
-                 padding_right=10 \
-                 blur_radius=0 \
-                 shadow=0 \
-                 border_width=0 
+sketchybar --bar height=$BAR_HEIGHT \
+                 color=$BAR_COLOR \
+                 position=$BAR_POSITION \
+                 padding_left=$BAR_PADDING_LEFT \
+                 padding_right=$BAR_PADDING_RIGHT \
+                 blur_radius=$BAR_BLUR_RADIUS \
+                 shadow=$BAR_SHADOW \
+                 border_width=$BAR_BORDER_WIDTH \
+                 display=main
 
 # --- Default Item Settings ---
 sketchybar --default icon.font="$FONT" \
                      label.font="$FONT" \
                      icon.color=$FG0 \
                      label.color=$FG0 \
-                     background.color=$BG1 \
-                     background.corner_radius=0 \
-                     background.border_width=3 \
+                     background.color=$ITEM_BG_COLOR \
+                     background.corner_radius=$ITEM_BG_CORNER_RADIUS \
+                     background.border_width=$ITEM_BG_BORDER_WIDTH \
                      background.border_color=$BORDER_COLOR \
-                     background.height=32 \
-                     background.padding_left=2 \
-                     background.padding_right=2 \
-                     icon.padding_left=10 \
-                     icon.padding_right=4 \
-                     label.padding_left=4 \
-                     label.padding_right=10 \
-                     margin=4
+                     background.height=$ITEM_BG_HEIGHT \
+                     background.padding_left=$ITEM_PADDING_LEFT \
+                     background.padding_right=$ITEM_PADDING_RIGHT \
+                     icon.padding_left=$ICON_PADDING_LEFT \
+                     icon.padding_right=$ICON_PADDING_RIGHT \
+                     label.padding_left=$LABEL_PADDING_LEFT \
+                     label.padding_right=$LABEL_PADDING_RIGHT \
+                     margin=$ITEM_MARGIN
 
 # --- Custom Event for AeroSpace ---
 sketchybar --add event aerospace_workspace_change
@@ -39,16 +81,16 @@ sketchybar --add event aerospace_workspace_change
 # --- Left: AeroSpace Workspaces ---
 for sid in 1 2 3 4 5 6 7 8 9 10 D F W S Q; do
   DRAWING="off"
-  if [[ "$sid" =~ ^[1-5]$ ]]; then DRAWING="on"; fi
+  if [[ "${SHOW_EMPTY_WORKSPACES:-true}" = "true" ]] && [[ "$sid" =~ ^[1-5]$ ]]; then DRAWING="on"; fi
 
   LABEL_FONT="$FONT"
   LABEL_Y_OFF=1
 
   case "$sid" in
-    "W") LABEL_TEXT="󰍡" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ;LABEL_Y_OFF=0  ;; # Browser 
-    "S") LABEL_TEXT="" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ;LABEL_Y_OFF=0  ;; # Spotify
-    "Q") LABEL_TEXT="" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ;LABEL_Y_OFF=0  ;; # WhatsApp
-    *)   LABEL_TEXT="$sid" ;; # Keep numbers/other letters normal
+    "W") LABEL_TEXT="󰍡" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ; LABEL_Y_OFF=0 ;;
+    "S") LABEL_TEXT="󰓇" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ; LABEL_Y_OFF=0 ;;
+    "Q") LABEL_TEXT="󰈹" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ; LABEL_Y_OFF=0 ;;
+    *)   LABEL_TEXT="$sid" ;;
   esac
 
   sketchybar --add item workspace.$sid left \
@@ -58,61 +100,132 @@ for sid in 1 2 3 4 5 6 7 8 9 10 D F W S Q; do
                    icon.drawing=off \
                    label="$LABEL_TEXT" \
                    label.font="$LABEL_FONT" \
-                   label.padding_left=12 \
-                   label.padding_right=12 \
+                   label.padding_left=${WS_LABEL_PADDING_LEFT:-12} \
+                   label.padding_right=${WS_LABEL_PADDING_RIGHT:-12} \
                    label.y_offset="$LABEL_Y_OFF" \
-                   background.height=32 \
-                   background.corner_radius=0 \
-                   background.border_width=3 \
+                   background.color=${WS_BG_COLOR:-$BG1} \
+                   background.height=${WS_BG_HEIGHT:-32} \
+                   background.corner_radius=${WS_BG_CORNER_RADIUS:-0} \
+                   background.border_width=${WS_BG_BORDER_WIDTH:-3} \
                    background.border_color=$BORDER_COLOR \
                    click_script="aerospace workspace $sid" \
                    script="$PLUGIN_DIR/aerospace.sh $sid"
 done
-# --- Right: Time ---
-sketchybar --add item clock right \
-           --set clock update_freq=10 \
-                       icon="󱑎" \
-                       icon.font="SF Pro:Bold:16.0" \
-                       icon.color=$BLUE \
-                       script="$PLUGIN_DIR/clock.sh" \
-                       click_script="$PLUGIN_DIR/toggle_stats.sh"
 
-# --- Right: Date ---
-sketchybar --add item date right \
-           --set date update_freq=1000 \
-                      icon="󰃭" \
-                      icon.font="SF Pro:Bold:16.0" \
-                      icon.color=$BLUE \
-                      script="$PLUGIN_DIR/date.sh"
+# --- Date and Time ---
+if [ "${DATE_TIME_AROUND_NOTCH:-false}" = "true" ]; then
+    # Nordic style: Date left of notch, Time right of notch
+    sketchybar --add item date q \
+               --set date update_freq=60 \
+                          icon.drawing=off \
+                          label.font="$FONT" \
+                          label.color=$FG0 \
+                          script="$PLUGIN_DIR/date.sh"
+
+    sketchybar --add item clock e \
+               --set clock update_freq=10 \
+                           icon.drawing=off \
+                           label.font="$FONT" \
+                           label.color=$FG0 \
+                           script="$PLUGIN_DIR/clock.sh" \
+                           click_script="$PLUGIN_DIR/toggle_stats.sh"
+else
+    # Default style: Both on right side with icons
+    if [ "$SHOW_CLOCK_ICON" = "true" ]; then
+        CLOCK_ICON="󱑎"
+    else
+        CLOCK_ICON=""
+    fi
+    sketchybar --add item clock right \
+               --set clock update_freq=10 \
+                           icon="$CLOCK_ICON" \
+                           icon.font="SF Pro:Bold:16.0" \
+                           icon.color=$BLUE \
+                           script="$PLUGIN_DIR/clock.sh" \
+                           click_script="$PLUGIN_DIR/toggle_stats.sh"
+
+    if [ "$SHOW_DATE_ICON" = "true" ]; then
+        DATE_ICON="󰃭"
+    else
+        DATE_ICON=""
+    fi
+    sketchybar --add item date right \
+               --set date update_freq=1000 \
+                          icon="$DATE_ICON" \
+                          icon.font="SF Pro:Bold:16.0" \
+                          icon.color=$BLUE \
+                          script="$PLUGIN_DIR/date.sh"
+fi
 
 # --- Right: Battery ---
 sketchybar --add item battery right \
-           --set battery update_freq=120 \
+           --set battery update_freq=5 \
                          icon.font="VictorMono Nerd Font Mono:Bold:18.0" \
                          icon.y_offset=0 \
                          icon.padding_left=10 \
-                         icon.padding_right=0 \
-                         script="$PLUGIN_DIR/battery.sh" 
+                         icon.padding_right=4 \
+                         label.padding_left=0 \
+                         label.padding_right=10 \
+                         background.padding_left=16 \
+                         script="$PLUGIN_DIR/battery.sh"
 
 # --- Right: Wi-Fi ---
 sketchybar --add item wifi right \
-           --set wifi update_freq=10 \
+           --set wifi update_freq=5 \
                       icon="􀙇" \
                       icon.font="SF Pro:Bold:16.0" \
                       icon.color=$CYAN \
                       icon.padding_left=10 \
-                      icon.padding_right=5 \
+                      icon.padding_right=10 \
                       script="$PLUGIN_DIR/wifi.sh" \
                       click_script="open x-apple.systempreferences:com.apple.wifi-settings-extension"
-# --- Center: Spotify / Music ---
-sketchybar --add item music right \
-           --set music update_freq=2 \
-                       icon="" \
-                       icon.font="VictorMono Nerd Font Mono:Regular:22.0" \
-                       icon.color=$MAGENTA \
-                       icon.padding_left=10 \
-                       icon.padding_right=4 \
-                       script="$PLUGIN_DIR/music.sh"
 
-sk
+# --- Right: Bluetooth ---
+sketchybar --add item bluetooth right \
+           --set bluetooth icon="󰂯" \
+                           icon.font="VictorMono Nerd Font Mono:Bold:18.0" \
+                           icon.color=$CYAN \
+                           icon.padding_left=10 \
+                           icon.padding_right=10 \
+                           label.drawing=off \
+                           update_freq=2 \
+                           script="$PLUGIN_DIR/bluetooth.sh" \
+                           click_script="open x-apple.systempreferences:com.apple.BluetoothSettings"
+
+# --- Right: Volume (left of wifi/battery) ---
+sketchybar --add slider volume right \
+           --set volume script="$PLUGIN_DIR/volume.sh" \
+                        updates=on \
+                        label.drawing=off \
+                        icon.drawing=off \
+                        slider.highlight_color=$CYAN \
+                        slider.background.height=5 \
+                        slider.background.corner_radius=3 \
+                        slider.background.color=$BORDER_COLOR \
+                        slider.knob=􀀁 \
+                        slider.knob.drawing=on \
+                        slider.width=0 \
+                        background.padding_right=10 \
+           --subscribe volume volume_change mouse.clicked \
+           --add item volume_icon right \
+           --set volume_icon label=􀊩 \
+                             label.font="SF Pro:Regular:16.0" \
+                             label.color=$FG0 \
+                             icon.drawing=off \
+                             background.padding_left=10 \
+                             script="SENDER=icon_clicked $PLUGIN_DIR/volume.sh" \
+                             click_script="SENDER=icon_clicked $PLUGIN_DIR/volume.sh"
+
+# --- Left: Spotify / Music (conditional) ---
+if [ "$SHOW_MUSIC" = "true" ]; then
+    sketchybar --add item music left \
+               --set music update_freq=2 \
+                           icon="󰓇" \
+                           icon.font="VictorMono Nerd Font Mono:Regular:22.0" \
+                           icon.color=$MAGENTA \
+                           icon.padding_left=10 \
+                           icon.padding_right=4 \
+                           script="$PLUGIN_DIR/music.sh"
+fi
+
 sketchybar --update

@@ -14,10 +14,6 @@ vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
-
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
 
 -- leetcode:
@@ -69,3 +65,18 @@ vim.keymap.set('n', '<M-l>', '<C-w>l', { desc = "Move to right window" })
 vim.keymap.set('n', '<M-j>', '<C-w>j', { desc = "Move to lower window" })
 vim.keymap.set('n', '<M-k>', '<C-w>k', { desc = "Move to upper window" })
 
+-- Move to previous/next bufferline tab
+vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+
+-- Loop through numbers 1 to 9
+for i = 1, 9 do
+    -- Maps <leader>1, <leader>2, etc.
+    vim.keymap.set("n", "<leader>" .. i, "<cmd>BufferLineGoToBuffer " .. i .. "<cr>", { desc = "Go to buffer " .. i })
+end
+
+-- Map <leader>0 to jump to the very last buffer in the line
+vim.keymap.set("n", "<leader>0", "<cmd>BufferLineGoToBuffer -1<cr>", { desc = "Go to last buffer" })
+
+-- Close the current tab (buffer)
+vim.keymap.set("n", "<leader>w", "<cmd>bdelete<cr>", { desc = "Close current tab" })
