@@ -6,9 +6,9 @@ source "$HOME/.config/sketchybar/colors.sh"
 STATE=$(system_profiler SPBluetoothDataType | grep "State:" | awk '{print $2}')
 
 if [ "$STATE" = "On" ]; then
-  # Bluetooth is ON - Bright Blue Icon
+  # Bluetooth is ON - Warm Amber/Orange Icon
   ICON="󰂯" 
-  COLOR=$CYAN
+  COLOR=$ORANGE
 else
   # Bluetooth is OFF - Muted Grey Icon
   ICON="󰂲" 

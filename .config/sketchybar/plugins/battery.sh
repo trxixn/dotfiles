@@ -13,12 +13,12 @@ CHARGING=$(pmset -g batt | grep 'AC Power')
 
 if [[ $CHARGING != "" ]]; then
   ICON="󰂄"
-  ICON_COLOR=$CYAN
+  ICON_COLOR=$AMBER
 else
   # Vertical battery icons based on percentage
   case ${BATT_PERCENT} in
-    [8-9][0-9]|100) ICON="󰁹" ; ICON_COLOR=$CYAN;;
-    [6-7][0-9]) ICON="󰂁" ; ICON_COLOR=$CYAN;;
+    [8-9][0-9]|100) ICON="󰁹" ; ICON_COLOR=$AMBER;;
+    [6-7][0-9]) ICON="󰂁" ; ICON_COLOR=$AMBER;;
     [3-5][0-9]) ICON="󰁾" ; ICON_COLOR=$YELLOW;;
     [1-2][0-9]) ICON="󰁻" ; ICON_COLOR=$RED ;;
     *) ICON="󰂎" ; ICON_COLOR=$RED ;;

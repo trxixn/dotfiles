@@ -5,9 +5,9 @@
 # Bar configuration
 export BAR_HEIGHT=36
 export BAR_COLOR=$BG0
-export BAR_BLUR_RADIUS=20
+# export BAR_BLUR_RADIUS=20
 # No Blur
-# export BAR_BLUR_RADIUS=0
+export BAR_BLUR_RADIUS=0
 export BAR_SHADOW=off
 export BAR_BORDER_WIDTH=0
 export BAR_BORDER_COLOR=$BORDER_COLOR

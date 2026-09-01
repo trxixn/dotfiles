@@ -2,15 +2,13 @@ return {
   {
 	'nvim-telescope/telescope.nvim',
 	dependencies = {
-		  'BurntSushi/ripgrep',
-          'nvim-telescope/telescope-fzf-native.nvim',
-           build = 'make',
-           "nvim-telescope/telescope-ui-select.nvim",
-           "aznhe21/actions-preview.nvim",
+		'BurntSushi/ripgrep',
+		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+		"nvim-telescope/telescope-ui-select.nvim",
+		"aznhe21/actions-preview.nvim",
 	},
 	config = function(lazy, opts)
 		local telescope = require('telescope')
-		telescope.load_extension('fzf')
 		telescope.setup({
             defaults = {
                     preview = { treesitter = false },
@@ -58,6 +56,7 @@ return {
                   }
                 })
                 telescope.load_extension("ui-select")
+                telescope.load_extension("fzf")
                 require("actions-preview").setup {
                     backend = { "telescope" },
                     extensions = { "env" },

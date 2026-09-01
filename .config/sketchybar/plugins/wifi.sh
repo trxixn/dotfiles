@@ -19,8 +19,8 @@ if [ "$WIFI_SSID" = "" ]; then
 else
   # Connected 
   if [ "$SHOW_WIFI_NAME" = "true" ]; then
-    sketchybar --set $NAME label="$WIFI_SSID" label.drawing=on icon="􀙇" icon.color=$CYAN label.color=$FG0
+    sketchybar --set $NAME label="$WIFI_SSID" label.drawing=on icon="􀙇" icon.color=$YELLOW label.color=$FG0
   else
-    sketchybar --set $NAME label.drawing=off icon="􀙇" icon.color=$CYAN
+    sketchybar --set $NAME label.drawing=off icon="􀙇" icon.color=$YELLOW
   fi
 fi

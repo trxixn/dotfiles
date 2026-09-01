@@ -35,6 +35,6 @@ vim.opt.termguicolors = true
 
 -- help line placed somewhere on the screen's y-axis ("" means no line)
 vim.opt.colorcolumn = ""
-vim.opt.showtabline = 2
+vim.opt.showtabline = 0
 
 vim.g.mapleader = " "

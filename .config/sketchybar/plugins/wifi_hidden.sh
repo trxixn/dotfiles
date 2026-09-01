@@ -9,6 +9,6 @@ if [ "$WIFI_SSID" = "" ]; then
   # Disconnected (Red slashed Wi-Fi icon)
   sketchybar --set $NAME label="" icon="􀙈" icon.color=$RED label.color=$RED
 else
-  # Connected (Cyan Wi-Fi icon)
-  sketchybar --set $NAME label="" icon="􀙇" icon.color=$CYAN label.color=$FG0
+  # Connected (Yellow Wi-Fi icon)
+  sketchybar --set $NAME label="" icon="􀙇" icon.color=$YELLOW label.color=$FG0
 fi

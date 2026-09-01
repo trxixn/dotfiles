@@ -55,7 +55,7 @@ sketchybar --bar height=$BAR_HEIGHT \
                  blur_radius=$BAR_BLUR_RADIUS \
                  shadow=$BAR_SHADOW \
                  border_width=$BAR_BORDER_WIDTH \
-                 display=main
+                 display=all
 
 # --- Default Item Settings ---
 sketchybar --default icon.font="$FONT" \
@@ -75,41 +75,31 @@ sketchybar --default icon.font="$FONT" \
                      label.padding_right=$LABEL_PADDING_RIGHT \
                      margin=$ITEM_MARGIN
 
-# --- Custom Event for AeroSpace ---
-sketchybar --add event aerospace_workspace_change
+# --- Left: Apple Logo Power Menu ---
+source "$PLUGIN_DIR/apple.sh"
 
-# --- Left: AeroSpace Workspaces ---
-for sid in 1 2 3 4 5 6 7 8 9 10 D F W S Q; do
+# --- Left: Yabai Workspaces ---
+for sid in {1..10}; do
   DRAWING="off"
   if [[ "${SHOW_EMPTY_WORKSPACES:-true}" = "true" ]] && [[ "$sid" =~ ^[1-5]$ ]]; then DRAWING="on"; fi
 
-  LABEL_FONT="$FONT"
-  LABEL_Y_OFF=1
-
-  case "$sid" in
-    "W") LABEL_TEXT="󰍡" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ; LABEL_Y_OFF=0 ;;
-    "S") LABEL_TEXT="󰓇" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ; LABEL_Y_OFF=0 ;;
-    "Q") LABEL_TEXT="󰈹" ; LABEL_FONT="VictorMono Nerd Font Mono:Regular:25.0" ; LABEL_Y_OFF=0 ;;
-    *)   LABEL_TEXT="$sid" ;;
-  esac
-
-  sketchybar --add item workspace.$sid left \
-             --subscribe workspace.$sid aerospace_workspace_change \
-             --set workspace.$sid \
+  sketchybar --add space space.$sid left \
+             --set space.$sid \
+                   associated_space=$sid \
                    drawing=$DRAWING \
                    icon.drawing=off \
-                   label="$LABEL_TEXT" \
-                   label.font="$LABEL_FONT" \
+                   label="$sid" \
+                   label.font="$FONT" \
                    label.padding_left=${WS_LABEL_PADDING_LEFT:-12} \
                    label.padding_right=${WS_LABEL_PADDING_RIGHT:-12} \
-                   label.y_offset="$LABEL_Y_OFF" \
+                   label.y_offset=1 \
                    background.color=${WS_BG_COLOR:-$BG1} \
                    background.height=${WS_BG_HEIGHT:-32} \
                    background.corner_radius=${WS_BG_CORNER_RADIUS:-0} \
                    background.border_width=${WS_BG_BORDER_WIDTH:-3} \
                    background.border_color=$BORDER_COLOR \
-                   click_script="aerospace workspace $sid" \
-                   script="$PLUGIN_DIR/aerospace.sh $sid"
+                   click_script="yabai -m space --focus $sid" \
+                   script="$PLUGIN_DIR/space.sh $sid"
 done
 
 # --- Date and Time ---
@@ -174,7 +164,7 @@ sketchybar --add item wifi right \
            --set wifi update_freq=5 \
                       icon="􀙇" \
                       icon.font="SF Pro:Bold:16.0" \
-                      icon.color=$CYAN \
+                      icon.color=$YELLOW \
                       icon.padding_left=10 \
                       icon.padding_right=10 \
                       script="$PLUGIN_DIR/wifi.sh" \
@@ -184,7 +174,7 @@ sketchybar --add item wifi right \
 sketchybar --add item bluetooth right \
            --set bluetooth icon="󰂯" \
                            icon.font="VictorMono Nerd Font Mono:Bold:18.0" \
-                           icon.color=$CYAN \
+                           icon.color=$ORANGE \
                            icon.padding_left=10 \
                            icon.padding_right=10 \
                            label.drawing=off \
@@ -192,29 +182,58 @@ sketchybar --add item bluetooth right \
                            script="$PLUGIN_DIR/bluetooth.sh" \
                            click_script="open x-apple.systempreferences:com.apple.BluetoothSettings"
 
-# --- Right: Volume (left of wifi/battery) ---
-sketchybar --add slider volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
-                        updates=on \
-                        label.drawing=off \
-                        icon.drawing=off \
-                        slider.highlight_color=$CYAN \
-                        slider.background.height=5 \
-                        slider.background.corner_radius=3 \
-                        slider.background.color=$BORDER_COLOR \
-                        slider.knob=􀀁 \
-                        slider.knob.drawing=on \
-                        slider.width=0 \
-                        background.padding_right=10 \
-           --subscribe volume volume_change mouse.clicked \
-           --add item volume_icon right \
-           --set volume_icon label=􀊩 \
-                             label.font="SF Pro:Regular:16.0" \
-                             label.color=$FG0 \
+# --- Right: Homebrew ---
+sketchybar --add item brew right \
+           --set brew icon="󰏗" \
+                      icon.font="VictorMono Nerd Font Mono:Bold:24.0" \
+                      icon.color=$GREEN \
+                      icon.padding_right=6 \
+                      label.padding_left=2 \
+                      update_freq=3600 \
+                      script="$PLUGIN_DIR/brew.sh"
+
+# --- Right: Network Speed ---
+sketchybar --add item network.down right \
+           --set network.down label.font="VictorMono Nerd Font Mono:Bold:10.0" \
+                              label.y_offset=6 \
+                              width=0 \
+                              icon="↓" \
+                              icon.font="VictorMono Nerd Font Mono:Bold:10.0" \
+                              icon.color=$ORANGE \
+                              icon.y_offset=6 \
+                              icon.padding_right=2 \
+           --add item network.up right \
+           --set network.up label.font="VictorMono Nerd Font Mono:Bold:10.0" \
+                            label.y_offset=-4 \
+                            icon="↑" \
+                            icon.font="VictorMono Nerd Font Mono:Bold:10.0" \
+                            icon.color=$ORANGE \
+                            icon.y_offset=-4 \
+                            icon.padding_right=2 \
+                            update_freq=2 \
+                            script="$PLUGIN_DIR/network.sh"
+
+# --- Right: CPU Graph & Top Process ---
+sketchybar --add item cpu.top right \
+           --set cpu.top label.font="VictorMono Nerd Font Mono:Regular:10.0" \
+                         label.y_offset=6 \
+                         width=0 \
+                         icon.drawing=off \
+                         click_script="open -a 'Activity Monitor'" \
+           --add item cpu.percent right \
+           --set cpu.percent label.font="VictorMono Nerd Font Mono:Bold:16.0" \
+                             label.y_offset=-4 \
+                             label.color=$YELLOW \
                              icon.drawing=off \
-                             background.padding_left=10 \
-                             script="SENDER=icon_clicked $PLUGIN_DIR/volume.sh" \
-                             click_script="SENDER=icon_clicked $PLUGIN_DIR/volume.sh"
+                             update_freq=2 \
+                             script="$PLUGIN_DIR/cpu.sh" \
+                             click_script="open -a 'Activity Monitor'" \
+           --add graph cpu.graph right 75 \
+           --set cpu.graph graph.color=$GREEN \
+                           graph.fill_color=0x80ebcb8b \
+                           graph.line_width=1.5 \
+                           icon.drawing=off \
+                           click_script="open -a 'Activity Monitor'"
 
 # --- Left: Spotify / Music (conditional) ---
 if [ "$SHOW_MUSIC" = "true" ]; then
